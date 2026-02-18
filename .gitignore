@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Spring Boot Secrets
+src/main/resources/application.properties
+
+# Build files
+target/
+
+# Logs
+*.log
+
+# STS / Eclipse
+.settings/
+.project
+.classpath
