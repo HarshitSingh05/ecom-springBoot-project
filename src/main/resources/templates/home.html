@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+        th:replace="~{base::layout(~{::section})}">
+<head>
+    <title>Welcome Page</title>
+</head>
+<body>
+	<section>
+		<!-- Start Slider -->
+		<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <img src="img/home1.jpg" class="d-block w-100" alt="..." height="550px">
+			  <div class="carousel-caption d-none d-md-block mb-5">
+			          <h1 class="text-bold text-light">Accessorize with Attitude</h1>
+			          <h5 class="text-light">Explore our premium collection of handbags, shoes, and accessories. Designed to match your every mood — because details make the difference.</h5>
+			        </div>
+		    </div>
+		    <div class="carousel-item">
+		      <img src="img/home2.jpg" class="d-block w-100" alt="..." height="550px">
+			  <div class="carousel-caption d-none d-md-block mb-5">
+			          <h1 class="text-bold text-light">Step Into the Future of Fashion</h1>
+			          <h5 class="text-light">Experience the perfect blend of trend and technology. Shop effortlessly in our modern space — where every piece tells your story.</h5>
+			        </div>
+		    </div>
+		    <div class="carousel-item">
+		      <img src="img/home3.jpg" class="d-block w-100" alt="..." height="550px">
+			  <div class="carousel-caption d-none d-md-block mb-5">
+				<h1 class="text-bold text-light">Elevate Your Everyday Style</h1>
+				        <h5 class="text-light">Discover timeless fashion pieces crafted for comfort and confidence. From chic neutrals to bold hues — redefine your wardrobe with elegance.</h5>
+				      </div>
+		    </div>
+		  </div>
+		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Previous</span>
+		  </button>
+		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Next</span>
+		  </button>
+		</div>
+		<!-- End Slider -->
+		<!-- Start Category Module-->
+		
+		<div class="container">
+			<div class="row">
+				<p class="text-center fw-semibold fs-3"> Category </p>
+				<div class="col-md-2">
+						  <div class="card shadow-sm border-1 rounded-3">
+						    <div class="card-body text-center">
+								<img src="img/category_img/appli.jpg"  class="card-img-top" width="100%" height="200px">
+						      <p class="card-text fw-semibold mb-0"> Electronics </p>
+						    </div>
+						  </div>
+					</div>
+					
+					
+					<div class="col-md-2">
+						<div class="card shadow-sm border-1 rounded-3">
+							<div class="card-body text-center">
+								<img src="img/category_img/beuty.png"  class="card-img-top" width="100%" height="200px">
+								<p class="card-text fw-semibold mb-0"> Beauty Products </p>
+							</div>
+					    </div>
+					</div>
+					<div class="col-md-2">
+						<div class="card shadow-sm border-1 rounded-3">
+							<div class="card-body text-center">
+								<img src="img/category_img/groccery.jpg"  class="card-img-top" width="100%" height="200px">
+								<p class="card-text fw-semibold mb-0"> Groceries </p>
+							</div>
+					    </div>
+					</div>
+					
+					<div class="col-md-2">
+						<div class="card shadow-sm border-1 rounded-3">
+							<div class="card-body text-center">
+								<img src="img/category_img/laptop.jpg"  class="card-img-top" width="100%" height="200px">
+								<p class="card-text fw-semibold mb-0"> Laptop </p>
+							</div>
+					    </div>
+					</div>
+					
+					<div class="col-md-2">
+						<div class="card shadow-sm border-1 rounded-3">
+							<div class="card-body text-center">
+								<img src="img/category_img/mobile.jpg"  class="card-img-top" width="100%" height="200px">
+								<p class="card-text fw-semibold mb-0"> Mobile </p>
+							</div>
+					    </div>
+					</div>
+					
+					
+					<div class="col-md-2">
+						<div class="card shadow-sm border-1 rounded-3">
+							<div class="card-body text-center">
+								<img src="img/category_img/pant.png"  class="card-img-top" width="100%" height="200px">
+								<p class="card-text fw-semibold mb-0"> Clothes </p>
+							</div>
+					    </div>
+					</div>	
+							
+				</div>
+				
+			</div>
+		
+		
+		<!-- End Category Module-->
+		
+		
+		
+		<!-- Start Latest product module-->
+		
+		<div class="container-fluid bg-light p-3">
+				<div class="row">
+					<p class="text-center fw-semibold fs-4">Latest Product</p>
+					
+						<div class="col-md-3">
+							<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+								<div class="card-body text-center">
+									<img alt="" src="img/product_img/laptop.jpg" class="" width="55%" height="150px">
+									<p class="text-center fw-semibold"> HP Laptop </p>
+								</div>
+							</div>
+						</div>
+						
+						
+						<div class="col-md-3">
+							<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+								<div class="card-body text-center">
+									<img alt="" src="img/product_img/laptop.jpg" class="" width="55%" height="150px">
+									<p class="text-center fw-semibold"> HP Laptop </p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-3">
+							<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+								<div class="card-body text-center">
+									<img alt="" src="img/product_img/laptop.jpg" class="" width="55%" height="150px">
+									<p class="text-center fw-semibold"> HP Laptop </p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-3">
+							<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+								<div class="card-body text-center">
+									<img alt="" src="img/product_img/laptop.jpg" class="" width="55%" height="150px">
+									<p class="text-center fw-semibold"> HP Laptop </p>
+								</div>
+							</div>
+						</div>
+		
+		
+	</section>
+    
+</body>
+</html>
