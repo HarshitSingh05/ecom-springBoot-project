@@ -10,7 +10,23 @@
 		<section>
 			<div class="container card-sh rounded" style="margin-top: 70px; margin-bottom: 120px;">
 					<div class="col-md-12 p-5">
+						
 						<div class="row">
+							
+							<th:block th:if="${session.succMsg}">
+								
+							  <p class="text-center fw-bold alert alert-success" role="alert"> [[${session.succMsg}]]</p>
+							  <th:block th:text="${@commonServiceImple.removeSessionMessage()}"> </th:block>
+								
+							</th:block>
+																						
+							<th:block th:if="${session.errorMsg}">
+							<p class="text-center fw-bold alert alert-danger" role="alert"> [[${session.errorMsg}]]</p>
+							<th:block th:text="${@commonServiceImple.removeSessionMessage()}"> </th:block>
+
+							</th:block>
+
+							
 						<div class="col-md-6 d-flex justify-content-center align-items-center">
 							<img th:src="@{'/img/product_img/'+${IdProduct.image}}" class="img-fluid shadow-lg rounded"
 							 width="500px" height="450px">
@@ -65,7 +81,15 @@
 												</div>
 												
 												<th:block th:if="${IdProduct.stock > 0}">
-													<a	class="btn btn-success col-md-12">Add To Cart</a>
+													
+													<th:block th:if="${user==null}">
+													<a href="/signin"	class="btn btn-success col-md-12">Add To Cart</a>
+													</th:block>
+													
+													<th:block th:unless="${user==null}">
+													<a th:href="@{/addCart(pid=${IdProduct.id}, uid=${user.id})}"	class="btn btn-success col-md-12">Add To Cart</a>
+													</th:block>
+													
 												</th:block>
 													
 												<th:block th:unless="${IdProduct.stock > 0}">
