@@ -24,6 +24,17 @@ public class Cart {
 	
 	@Transient
 	private Double totalPrice;
+	
+	@Transient
+	private Double totalOrderPrice;
+
+	public Double getTotalOrderPrice() {
+		return totalOrderPrice;
+	}
+
+	public void setTotalOrderPrice(Double totalOrderPrice) {
+		this.totalOrderPrice = totalOrderPrice;
+	}
 
 	public Double getTotalPrice() {
 		return totalPrice;

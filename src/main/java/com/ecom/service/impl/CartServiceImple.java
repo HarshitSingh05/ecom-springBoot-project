@@ -1,5 +1,6 @@
 package com.ecom.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,8 +58,20 @@ public class CartServiceImple implements CartService {
 
 	@Override
 	public List<Cart> getCartsByUser(Integer userId) {
+		List<Cart> carts = cartRepository.findByUserId(userId);
 		
-		return null;
+		Double totalOrderPrice = 0.0;
+		List<Cart> updateCarts = new ArrayList<>();
+		for(Cart c: carts) {
+			Double totalPrice = (c.getProduct().getDiscountPrice() * c.getQuantity());
+			c.setTotalPrice(totalPrice);
+			totalOrderPrice = totalOrderPrice + totalPrice;
+			totalOrderPrice = Math.round(totalOrderPrice * 100.0)/100.0;
+			c.setTotalOrderPrice(totalOrderPrice);
+			updateCarts.add(c);
+		}
+		
+		return updateCarts;
 	}
 
 	@Override
@@ -67,6 +80,26 @@ public class CartServiceImple implements CartService {
 		Integer countByUserId = cartRepository.countByUserId(userId);
 		
 		return countByUserId;
+	}
+
+	@Override
+	public void updateQuantity(String sy, Integer cid) {
+		
+		Cart cart = cartRepository.findById(cid).get();
+		int updateQuantity;
+		if(sy.equalsIgnoreCase("de")) {
+			updateQuantity = cart.getQuantity() - 1;
+			
+			if(updateQuantity <= 0) {
+				cartRepository.deleteById(cid);
+				return;
+			}
+		}else {
+			updateQuantity = cart.getQuantity()+1;
+			
+		}
+		cart.setQuantity(updateQuantity);
+		cartRepository.save(cart);
 	}
 
 }

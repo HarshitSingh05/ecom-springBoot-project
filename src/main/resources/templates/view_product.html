@@ -87,7 +87,7 @@
 													</th:block>
 													
 													<th:block th:unless="${user==null}">
-													<a th:href="@{/addCart(pid=${IdProduct.id}, uid=${user.id})}"	class="btn btn-success col-md-12">Add To Cart</a>
+													<a th:href="@{/user/addCart(pid=${IdProduct.id}, uid=${user.id})}"	class="btn btn-success col-md-12">Add To Cart</a>
 													</th:block>
 													
 												</th:block>
