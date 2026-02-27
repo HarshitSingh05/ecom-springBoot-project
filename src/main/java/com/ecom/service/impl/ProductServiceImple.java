@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ecom.model.Product;
 import com.ecom.repository.ProductRepository;
+import com.ecom.service.ImageService;
 import com.ecom.service.ProductService;
 
 
@@ -23,6 +24,9 @@ public class ProductServiceImple implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private ImageService imageService;
 
 	@Override
 	public Product saveProduct(Product product) {
@@ -56,15 +60,23 @@ public class ProductServiceImple implements ProductService {
 
 	@Override
 	public Product updateProduct(Product product, MultipartFile image) {
+		
 		Product dbproduct = getProductById(product.getId());
-		String imagename = image.isEmpty() ? dbproduct.getImage() : image.getOriginalFilename();
+	    if (ObjectUtils.isEmpty(dbproduct)) {
+	        return null;
+	    }
+		
+		String imageUrl = dbproduct.getImage();
+		 if (image != null && !image.isEmpty()) {
+		        imageUrl = imageService.uploadImage(image, "ecom/products");
+		    }
 		
 		dbproduct.setTitle(product.getTitle());
 		dbproduct.setDescription(product.getDescription());
 		dbproduct.setCategory(product.getCategory());
 		dbproduct.setPrice(product.getPrice());
 		dbproduct.setStock(product.getStock());
-		dbproduct.setImage(imagename);
+		dbproduct.setImage(imageUrl);
 		dbproduct.setIsActive(product.getIsActive());
 		dbproduct.setDiscount(product.getDiscount());
 		
@@ -74,23 +86,10 @@ public class ProductServiceImple implements ProductService {
 		dbproduct.setDiscountPrice(discountPrice);
 		
 		Product updateProduct = productRepository.save(dbproduct);
+		
 		if(!ObjectUtils.isEmpty(updateProduct)) {
-			if(!image.isEmpty()) {
-				try {
-					File saveFile = new ClassPathResource("static/img").getFile();
-					Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+"category_img"+File.separator+image.getOriginalFilename());
-					
-					Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-					
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
 			return updateProduct;
 		}
-		
-		
 		return null;
 	}
 

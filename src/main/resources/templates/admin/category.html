@@ -76,7 +76,7 @@
 								      <th scope="row">[[${c.count}]]</th>
 								      <td> [[${cat.name}]]</td>
 								      <td> [[${cat.isActive}]]</td>
-								      <td> <img th:src="@{'/img/category_img/' + ${cat.imageName}}" width="100px" height="100px"> </td>
+								      <td> <img th:src="${cat.imageName}" width="100px" height="100px"> </td>
 									
 								  <td><a th:href="@{'/admin/loadEditCategory/'+${cat.id}}" class="btn btn-primary btn-sm"> <i class="fa-solid fa-pen-to-square"></i> Edit </a>
 									<br><br>

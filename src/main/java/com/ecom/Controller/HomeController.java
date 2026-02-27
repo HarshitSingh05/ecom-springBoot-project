@@ -1,18 +1,12 @@
 package com.ecom.Controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +23,7 @@ import com.ecom.model.Product;
 import com.ecom.model.UserDetls;
 import com.ecom.service.CartService;
 import com.ecom.service.CategoryService;
+import com.ecom.service.ImageService;
 import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
 import com.ecom.util.CommonUtil;
@@ -57,6 +52,9 @@ public class HomeController {
 	
 	@Autowired
 	private CartService cartService;
+	
+	@Autowired
+	private ImageService imageService;
 	
 	@ModelAttribute
 	public void getUserDetails(Principal p,Model m) {
@@ -108,20 +106,15 @@ public class HomeController {
 	@PostMapping("/saveUser")
 	public String saveUser(@ModelAttribute UserDetls user, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
 		
-		String imageName = file.isEmpty() ? "default.jpg" : file.getOriginalFilename();
-		user.setProfileImage(imageName);
+		String imageUrl = "default.jpg";
+	    if (file != null && !file.isEmpty()) {
+	        imageUrl = imageService.uploadImage(file, "ecom/users");
+	    }
+		user.setProfileImage(imageUrl);
 		
 		UserDetls saveUser = userService.saveUser(user);
 		
 		if(!ObjectUtils.isEmpty(saveUser)) {
-			if(!file.isEmpty()) {
-				
-				File saveFile = new ClassPathResource("static/img").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+"profile_img"+File.separator+file.getOriginalFilename());
-				
-				
-				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-			}
 			session.setAttribute("succMsg", "User Registerd Successfully");
 		}else {
 			session.setAttribute("errorMsg", "Something went Wrong. TryAgain!!");	

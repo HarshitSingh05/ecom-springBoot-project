@@ -42,7 +42,7 @@
 					  <tbody>
 					    <tr th:each="u, c:${users}">
 					      <th scope="row">[[${c.count}]]</th>
-					      <td><img th:src="@{'/img/profile_img/' + ${u.profileImage}}" width="70px" height="70px"></td>
+					      <td><img th:src="${u.profileImage}" width="70px" height="70px"></td>
 					      <td>[[${u.fullName}]]</td>
 					      <td>[[${u.email}]]</td>
 						  <td>[[${u.mobileNumber}]]</td>

@@ -1,16 +1,10 @@
 package com.ecom.Controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
@@ -27,6 +21,7 @@ import com.ecom.model.Product;
 import com.ecom.model.UserDetls;
 import com.ecom.service.CartService;
 import com.ecom.service.CategoryService;
+import com.ecom.service.ImageService;
 import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
 
@@ -48,6 +43,9 @@ public class AdminController {
 	
 	@Autowired
 	private CartService cartService;
+	
+	@Autowired
+	private ImageService imageService;
 	
 	
 	@ModelAttribute
@@ -85,8 +83,11 @@ public class AdminController {
 	@PostMapping("/saveCategory")
 	public String saveCategory(@ModelAttribute Category category, @RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
 		
-	    String imageName =	file!=null ? file.getOriginalFilename() : "default.jpg";
-	    category.setImageName(imageName);
+	    String imageUrl ="default.jpg";
+	    if(file != null && !file.isEmpty()) {
+	    	imageUrl = imageService.uploadImage(file, "ecom/categories");
+	    }
+	    category.setImageName(imageUrl);
 		
 		Boolean existCategory = categoryService.existCategory(category.getName());
 		
@@ -99,11 +100,6 @@ public class AdminController {
 			if(ObjectUtils.isEmpty(saveCategory)) {
 				session.setAttribute("IntrnalError", "Not Saved ! Internal Server Error");
 			}else {
-				
-				File saveFile = new ClassPathResource("static/img").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+"category_img"+File.separator+file.getOriginalFilename());
-				
-				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 				session.setAttribute("succMsg", "Saved Successfully !!");
 			}
 		}
@@ -133,22 +129,23 @@ public class AdminController {
 	public String updateCategory(@ModelAttribute Category category, @RequestParam("file") MultipartFile file, HttpSession session) throws IOException {
 		
 		Category oldCategory = categoryService.getCategoryById(category.getId());
-		String imageName = file.isEmpty() ? oldCategory.getImageName() : file.getOriginalFilename();
-		if(!ObjectUtils.isEmpty(category)) {
+	    if (ObjectUtils.isEmpty(oldCategory)) {
+	        session.setAttribute("errorMsg", "Category not found");
+	        return "redirect:/admin/category";
+	    }
+		String imageUrl = oldCategory.getImageName();
+		
+		if(file != null && !file.isEmpty()) {
+			imageUrl = imageService.uploadImage(file, "ecom/categories");
+		}
+		
 			 oldCategory.setName(category.getName());
 			 oldCategory.setIsActive(category.getIsActive());
-			 oldCategory.setImageName(imageName);
-		}
+			 oldCategory.setImageName(imageUrl);
+		
 		Category updateCategory = categoryService.saveCategory(oldCategory);
 		
 		if(!ObjectUtils.isEmpty(updateCategory)) {
-			
-			if(!file.isEmpty()) {
-				File saveFile = new ClassPathResource("static/img").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+"category_img"+File.separator+file.getOriginalFilename());
-				
-				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-			}
 			
 			session.setAttribute("succMsg", "Category updated!");
 		}else {
@@ -161,20 +158,18 @@ public class AdminController {
 	@PostMapping("/saveProduct")
 	public String saveProduct(@ModelAttribute Product product, @RequestParam("file") MultipartFile image, HttpSession session) throws IOException {
 		
-		String imageName = image.isEmpty() ? "default.jpg" : image.getOriginalFilename();
+		String imageUrl ="default.jpg";
+	    if (image != null && !image.isEmpty()) {
+	        imageUrl = imageService.uploadImage(image, "ecom/products");
+	    }
 		
-		product.setImage(imageName);
+		product.setImage(imageUrl);
 		product.setDiscount(0);
 		product.setDiscountPrice(product.getPrice());
+		
 		Product saveProduct = productService.saveProduct(product);
 		
 		if( !ObjectUtils.isEmpty(saveProduct)) {
-			
-			File saveFile = new ClassPathResource("static/img").getFile();
-			Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+"product_img"+File.separator+image.getOriginalFilename());
-			
-			
-			Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			
 			session.setAttribute("succMsg", "Product Saved Success");
 		}else {

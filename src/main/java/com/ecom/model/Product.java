@@ -32,6 +32,7 @@ public class Product {
 	
 	private int stock;
 	
+	@Column(length = 1000)
 	private String image;
 	
 	private int discount;

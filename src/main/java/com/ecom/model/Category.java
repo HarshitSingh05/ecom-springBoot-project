@@ -1,5 +1,6 @@
 package com.ecom.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class Category {
 	
 	private String name;
 	
+	@Column(length = 1000)
 	private String imageName;
 	
 	private Boolean isActive;
