@@ -33,7 +33,7 @@ build/
 .vscode/
 
 # Spring Boot Secrets
-src/main/resources/application.properties
+src/main/resources/application-secret.properties
 
 # Build files
 target/
