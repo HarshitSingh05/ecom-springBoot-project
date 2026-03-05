@@ -33,6 +33,8 @@ public class AuthFailureHandlerImpl extends SimpleUrlAuthenticationFailureHandle
 		String email = request.getParameter("username");
 		UserDetls userDetls = userRepository.findByEmail(email);
 		
+		if(userDetls != null) {
+		
 		if(userDetls.getEnable()) {
 			
 			if(userDetls.getAccountNonLocked()) {
@@ -60,6 +62,11 @@ public class AuthFailureHandlerImpl extends SimpleUrlAuthenticationFailureHandle
 		}else {
 			exception = new LockedException("Your account is Inactive");
 		}
+		}
+		else {
+			exception = new LockedException("Email & password is Invalid");
+		}
+		
 		
 		super.setDefaultFailureUrl("/signin?error");
 		super.onAuthenticationFailure(request, response, exception);
