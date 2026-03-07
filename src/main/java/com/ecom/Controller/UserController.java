@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ecom.model.Cart;
 import com.ecom.model.Category;
@@ -45,6 +47,9 @@ public class UserController {
 	
 	@Autowired
 	private CommonUtil commonUtil;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/")
 	public String home() {
@@ -164,5 +169,54 @@ public class UserController {
 		   session.setAttribute("errorMsg", "Something went wrong on server!!");
 	   }
 		return "redirect:/user/user-orders";
+	}
+	
+	@GetMapping("/profile")
+	public String profile(Principal p,Model m) {
+		UserDetls user = getLoggedInUserDetails(p);
+		m.addAttribute("user", user);
+		return "/user/profile";
+	}
+	
+	@GetMapping("/edit-profile")
+	public String editProfile(Principal p,Model m) {
+		UserDetls user = getLoggedInUserDetails(p);
+		m.addAttribute("user", user);
+		return "user/edit_profile";
+	}
+	
+	@PostMapping("/save-editProfile")
+	public String saveEditProfile(@ModelAttribute UserDetls user,@RequestParam MultipartFile img,HttpSession session) {
+		
+		UserDetls updateUserProfile = userService.updateUserProfile(user, img);
+		if(ObjectUtils.isEmpty(updateUserProfile)) {
+			session.setAttribute("errorMsg", "Profile not Updated");
+		}else {
+			session.setAttribute("succMsg", "Profile Updated");
+		}
+		
+		return "redirect:/user/edit-profile";
+	}
+	
+	@PostMapping("/change-password")
+	public String changePassword(@RequestParam String newPassword, @RequestParam String currentPassword,Principal p,HttpSession session) {
+		UserDetls loggedInUserDetails = getLoggedInUserDetails(p);
+		
+		boolean matches = passwordEncoder.matches(currentPassword, loggedInUserDetails.getPassword());
+		
+		if(matches) {
+			String encodePassword = passwordEncoder.encode(newPassword);
+			loggedInUserDetails.setPassword(encodePassword);
+			UserDetls updateUser = userService.updateUser(loggedInUserDetails);
+			if(ObjectUtils.isEmpty(updateUser)) {
+				session.setAttribute("errorMsg", "Something went Wrong on Server!!");
+			}else {
+				session.setAttribute("succMsg", "Password Changed Successfully");
+			}
+		}else {
+			session.setAttribute("errorMsg", "Current Password Incorrect");
+		}
+		
+		return "redirect:/user/edit-profile";
 	}
 }

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+        th:replace="~{base::layout(~{::section})}">
+<head>
+    <title>Welcome Page</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-5 p-5">
+			
+					<div class="row">
+						
+						<div class="col-md-10 offset-md-1">
+							<div class="card">
+								<div class="card-body">
+									<p class="fs-3 text-center fw-bold"> My Profile </p>
+									<div class="text-center">
+										
+									<img alt="Profile_Image" th:src="${user.profileImage}" class="border p-2"
+									 style="width: 130px; height: 130px; border-radius: 50%;">
+									 
+									 </div>
+									 
+									 <div class="col-md-6 offset-md-3 mt-4">
+										
+									 <table class="table table-borderless">
+									 
+									   <tbody>
+									     <tr>
+											
+									       <th scope="row"> Name </th>
+										   <td>:</td>
+									       <td>[[${user.fullName}]]</td>
+										   
+									     </tr>
+										 
+										 <tr>
+
+										   <th scope="row"> Email </th>
+										   <td>:</td>
+										   <td>[[${user.email}]]</td>
+										   
+										 </tr>
+										 
+										 <tr>
+
+										   <th scope="row"> Mobile Number </th>
+										   <td>:</td>
+										   <td>[[${user.mobileNumber}]]</td>
+										   
+										 </tr>
+										 
+										 <tr>
+
+										   <th scope="row"> Address </th>
+										   <td>:</td>
+										   <td>[[${user.address}]]</td>
+										   
+										 </tr>
+										 
+										 <tr>
+
+										   <th scope="row"> State </th>
+										   <td>:</td>
+										   <td>[[${user.state}]]</td>
+										   
+										 </tr>
+										 
+										 <tr>
+
+										   <th scope="row"> City </th>
+										   <td>:</td>
+										   <td>[[${user.city} +${" , "}+ ${user.pincode}]] </td>
+										   
+										 </tr>
+										 
+										 <tr>
+
+										   <th scope="row"> Role </th>
+										   <td>:</td>
+										   <td>[[${user.role}]] </td>
+										   
+										 </tr>
+										 
+										 <tr>
+
+										   <th scope="row"></th>
+										   <td> <a href="/user/edit-profile" class="btn btn-primary"> Edit Profile </a></td>
+										   <td></td>
+										   
+										 </tr>
+										 
+						
+									   </tbody>
+									 </table>
+									 
+									 </div>
+									 
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+	</section>
+    
+</body>
+</html>

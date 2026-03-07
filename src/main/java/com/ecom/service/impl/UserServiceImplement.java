@@ -7,9 +7,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ecom.model.UserDetls;
 import com.ecom.repository.UserRepository;
+import com.ecom.service.ImageService;
 import com.ecom.service.UserService;
 import com.ecom.util.AppConstant;
 
@@ -21,6 +24,9 @@ public class UserServiceImplement implements UserService  {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private ImageService imageService;
 	
 	
 	@Override
@@ -133,6 +139,31 @@ public class UserServiceImplement implements UserService  {
 	public UserDetls updateUser(UserDetls user) {
 		
 		return userRepository.save(user);
+	}
+
+
+	@Override
+	public UserDetls updateUserProfile(UserDetls user,MultipartFile img) {
+		
+		
+		UserDetls dbUser = userRepository.findById(user.getId()).get();
+		
+		String imageUrl = dbUser.getProfileImage();
+		if(img != null  && !img.isEmpty()) {
+			imageUrl = imageService.uploadImage(img, "ecom/users");
+		}
+		dbUser.setProfileImage(imageUrl);
+		
+		if(!ObjectUtils.isEmpty(dbUser)) {
+			dbUser.setFullName(user.getFullName());
+			dbUser.setMobileNumber(user.getMobileNumber());
+			dbUser.setAddress(user.getAddress());
+			dbUser.setState(user.getState());
+			dbUser.setCity(user.getCity());
+			dbUser.setPincode(user.getPincode());
+			
+		}
+		return userRepository.save(dbUser);
 	}
 
 }
