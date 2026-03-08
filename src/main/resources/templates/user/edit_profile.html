@@ -14,7 +14,7 @@
 							
 								<div class="card-body card-sh rounded-4">
 									<p class="fs-3 text-center fw-bold"> Edit Profile </p>
-									
+									<a href="/user/profile" class="text-decoration-none"><i class="fa-solid fa-backward"></i> Back </a>
 									<th:block th:if="${session.succMsg}">
 										<p class="text-success fw-bold text-center"> [[${session.succMsg}]]</p>
 										<th:block th:text="${@commonServiceImple.removeSessionMessage()}"> </th:block>
@@ -26,6 +26,7 @@
 									</th:block>
 									
 									<hr>
+									
 									<div class="text-center">
 										
 									<img alt="Profile_Image" th:src="${user.profileImage}" class="border p-2"

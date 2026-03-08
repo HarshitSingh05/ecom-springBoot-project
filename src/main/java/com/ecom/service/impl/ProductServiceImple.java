@@ -1,14 +1,8 @@
 package com.ecom.service.impl;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -103,6 +97,12 @@ public class ProductServiceImple implements ProductService {
 		}
 	 
 		return products;
+	}
+
+	@Override
+	public List<Product> searchProduct(String ch) {
+		
+		return productRepository.findByTitleContainingIgnoreCaseOrCategoryContainingIgnoreCase(ch, ch);
 	}
 
 	
