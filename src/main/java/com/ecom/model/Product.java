@@ -1,10 +1,14 @@
 package com.ecom.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -40,6 +44,12 @@ public class Product {
 	private double discountPrice;
 	
 	private boolean isActive;
+	
+	@OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+	private List<Cart> carts;
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+	private List<ProductOrder> orders;
 	
 	
 

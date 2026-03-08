@@ -11,8 +11,19 @@
 		<div class="container-fluid mt-5 p-5">
 			
 			<div class="card card-sh">
+				<a href="/admin/" class="text-decoration-none"><i class="fa-solid fa-backward"></i> Back </a>
 				<div class="card-header text-center">
 					<p class="fs-4"> View Product </p>
+					
+					<div class="col-md-4">
+						
+						<form action="/admin/products" method="get">
+							<div class="input-group">
+								<input type="text" class="form-control" name="ch">
+								<button class="btn btn-primary text-light ms-3"><i class="fa-solid fa-magnifying-glass"></i> Search </button>
+							</div>
+						</form>
+					</div>
 					
 					<th:block th:if="${session.succMsg}">
 						<p class="text-success fw-bold"> [[${session.succMsg}]]</p>
@@ -26,8 +37,8 @@
 
 				</div>
 				<div class="card-body"> 
-					<table class="table">
-					  <thead>
+					<table class="table table-bordered">
+					  <thead class="table-light">
 					    <tr>
 					      <th scope="col">sl No</th>
 						  <th scope="col">Image</th>
