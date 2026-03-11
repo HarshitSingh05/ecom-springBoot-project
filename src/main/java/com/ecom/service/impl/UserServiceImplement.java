@@ -166,5 +166,41 @@ public class UserServiceImplement implements UserService  {
 		return userRepository.save(dbUser);
 	}
 
+
+	@Override
+	public UserDetls saveAdmin(UserDetls user) {
+		
+		user.setRole("ROLE_ADMIN");
+		user.setEnable(true);
+		user.setAccountNonLocked(true);
+		user.setFailedAttempt(0);
+		String encodePassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodePassword);
+		
+		
+		UserDetls saveUser = userRepository.save(user);
+		return saveUser;
+		}
+
+
+	@Override
+	public Boolean makeAdmin(Integer id) {
+		UserDetls user = userRepository.findById(id).get();
+		if(!ObjectUtils.isEmpty(user)) {
+			user.setRole("ROLE_ADMIN");
+			userRepository.save(user);
+			return true;
+		}
+		
+		return false;
+	}
+
+
+	@Override
+	public boolean existsEmail(String email) {	
+		
+		return userRepository.existsByEmail(email);
+	}
+
 }
 

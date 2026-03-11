@@ -1,13 +1,21 @@
 package com.ecom.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class OrderRequest {
 
+	@NotBlank
 	private String firstName;
 	
+	@NotBlank
 	private String lastName;
 	
+	@Email
 	private String email;
 	
+	@NotBlank
 	private String mobileNo;
 	
 	private String address;
@@ -18,6 +26,7 @@ public class OrderRequest {
 	
 	private String pincode;
 	
+	@NotNull
 	private String paymentType;
 
 	public String getFirstName() {

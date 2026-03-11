@@ -31,4 +31,10 @@ public interface UserService {
 	public UserDetls updateUser(UserDetls user);
 	
 	public UserDetls updateUserProfile(UserDetls user,MultipartFile img);
+	
+	public UserDetls saveAdmin(UserDetls user);
+	
+	public Boolean makeAdmin(Integer id);
+	
+	public boolean existsEmail(String email);
 }

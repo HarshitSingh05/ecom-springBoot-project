@@ -8,6 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "registered_user")
@@ -17,10 +20,13 @@ public class UserDetls {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotBlank
 	private String fullName;
 	
+	@NotBlank
 	private String mobileNumber;
 	
+	@Email
 	private String email;
 	
 	private String address;
@@ -31,6 +37,7 @@ public class UserDetls {
 	
 	private String pincode;
 	
+	@NotEmpty
 	private String password;
 	
 	@Column(length = 1000)

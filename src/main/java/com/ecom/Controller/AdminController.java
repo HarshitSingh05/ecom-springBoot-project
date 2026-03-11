@@ -191,11 +191,12 @@ public class AdminController {
 	}
 	
 	@GetMapping("/products")
-	public String loadViewProduct(Model m,@RequestParam(defaultValue = "") String ch) {
-		List<Product> products = null;
+	public String loadViewProduct(Model m, @RequestParam(defaultValue = "0") String category, @RequestParam(defaultValue = "") String ch) {
+		List<Product> products;
 		if(ch != null && ch.length() > 0) {
 			products = productService.searchProduct(ch);
-		}else {
+		}
+		else {
 			products = productService.getAllProduct();
 		}
 		
@@ -241,14 +242,20 @@ public class AdminController {
 	}
 	
 	@GetMapping("/users")
-	public String getAllUsers(Model m) {
-		List<UserDetls> users = userService.getUsers("ROLE_USER");
+	public String getAllUsers(Model m,@RequestParam Integer type) {
+		List<UserDetls> users = null;
+		if(type == 1) {
+			users = userService.getUsers("ROLE_USER");
+		}else {
+			users = userService.getUsers("ROLE_ADMIN");
+		}
+		m.addAttribute("userType", type);
 		m.addAttribute("users", users);
 		return "/admin/users";
 	}
 	
 	@GetMapping("/updateSts")
-	public String updateUserAccountStatus(@RequestParam Boolean status, @RequestParam Integer id,HttpSession session) {
+	public String updateUserAccountStatus(@RequestParam Boolean status, @RequestParam Integer id, @RequestParam Integer type, HttpSession session) {
 		
 		Boolean f = userService.updateAccountStatus(id,status);
 		if(f) {
@@ -256,7 +263,7 @@ public class AdminController {
 		}else {
 			session.setAttribute("errorMsg", "Something Wrong on server");
 		}
-		return "redirect:/admin/users";
+		return "redirect:/admin/users?type="+type;
 	}
 	
 	@GetMapping("/orders")
@@ -294,5 +301,43 @@ public class AdminController {
 		return "redirect:/admin/orders";
 	}
 	
+	@GetMapping("/add-admin")
+	public String loadAdminAdd() {
+		return "/admin/add_admin";
+	}
+	
+	
+	@PostMapping("/save-admin")
+	public String saveAdmin(@ModelAttribute UserDetls user, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
+		
+		String imageUrl = "default.jpg";
+	    if (file != null && !file.isEmpty()) {
+	        imageUrl = imageService.uploadImage(file, "ecom/users");
+	    }
+		user.setProfileImage(imageUrl);
+		
+		UserDetls saveUser = userService.saveAdmin(user);
+		
+		if(!ObjectUtils.isEmpty(saveUser)) {
+			session.setAttribute("succMsg", "Admin Added Successfully");
+		}else {
+			session.setAttribute("errorMsg", "Something went Wrong. TryAgain!!");	
+			
+		}
+		
+		return "redirect:/admin/add-admin";
+	}
+	
+	@GetMapping("/makeAdmin")
+	public String makeAdmin(@RequestParam Integer id,HttpSession session) {
+		
+		Boolean admin = userService.makeAdmin(id);
+		if(admin) {
+			session.setAttribute("succMsg", "User promoted to Admin successfully");
+		}else {
+			session.setAttribute("errorMsg", "Something went Wrong. TryAgain!!");
+		}
+		return "redirect:/admin/users?type=1";
+	}
 
 }

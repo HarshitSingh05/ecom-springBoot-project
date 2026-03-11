@@ -32,3 +32,33 @@
   transition: color 0.3s ease; /* smooth color fade */
 }
 
+
+/* home page product card css*/
+
+.product-card{
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.product-card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px rgba(0,0,0,0.15);
+}
+
+.product-img{
+    height:180px;
+    object-fit:cover;
+    border-radius:8px;
+}
+
+.category-card{
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.category-card:hover{
+    transform: scale(1.03);
+    box-shadow: 0 20px 25px rgba(0,0,0,0.15);
+}
+

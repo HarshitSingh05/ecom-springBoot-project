@@ -44,7 +44,8 @@
 											
 									       <th scope="row"> Name </th>
 										   <td>:</td>
-									       <td><input type="text" name="fullName" class="form-control" th:value="${user.fullName}" placeholder="fullName"></td>
+									       <td><input type="text" name="fullName" class="form-control" required
+											 th:value="${user.fullName}" placeholder="fullName"></td>
 										   
 									     </tr>
 										 
@@ -53,7 +54,8 @@
 
 										   <th scope="row"> Mobile Number </th>
 										   <td>:</td>
-										   <td><input type="text" name="mobileNumber" class="form-control" th:value="${user.mobileNumber}" placeholder="Mobile Number"></td>
+										   <td><input type="text" name="mobileNumber" class="form-control" required
+											 th:value="${user.mobileNumber}" placeholder="Mobile Number"></td>
 										   
 										 </tr>
 										 
@@ -61,7 +63,8 @@
 
 										   <th scope="row"> Address </th>
 										   <td>:</td>
-										   <td><input type="text" name="address" class="form-control" th:value="${user.address}" placeholder="Address"></td>
+										   <td><input type="text" name="address" class="form-control" required
+											 th:value="${user.address}" placeholder="Address"></td>
 										   
 										 </tr>
 										 
@@ -69,7 +72,8 @@
 
 										   <th scope="row"> State </th>
 										   <td>:</td>
-										   <td><input type="text" name="state" class="form-control" th:value="${user.state}" placeholder="State"></td>
+										   <td><input type="text" name="state" class="form-control" required
+											 th:value="${user.state}" placeholder="State"></td>
 										   
 										 </tr>
 										 
@@ -77,7 +81,8 @@
 
 										   <th scope="row"> City </th>
 										   <td>:</td>
-										   <td><input type="text" name="city" class="form-control" th:value="${user.city}" placeholder="City"> </td>
+										   <td><input type="text" name="city" class="form-control" required
+											 th:value="${user.city}" placeholder="City"> </td>
 										   
 										 </tr>
 										 
@@ -85,7 +90,8 @@
 
 										   <th scope="row"> Pincode </th>
 										   <td>:</td>
-										   <td><input type="text" name="pincode" class="form-control" th:value="${user.pincode}" placeholder="Pincode">
+										   <td><input type="text" name="pincode" class="form-control" required
+											 th:value="${user.pincode}" placeholder="Pincode">
 										 <input type="hidden" th:value="${user.id}" name="id"></td>
 										   
 										 </tr>

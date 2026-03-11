@@ -12,7 +12,8 @@
 			
 			<div class="card card-sh">
 				<div class="card-header text-center">
-					<p class="fs-4"> Users </p>
+					<p class="fs-4" th:if="${userType==1}"> Users </p>
+					<p class="fs-4" th:if="${userType==2}"> Admins </p>
 					
 					<th:block th:if="${session.succMsg}">
 						<p class="text-success fw-bold"> [[${session.succMsg}]]</p>
@@ -50,12 +51,17 @@
 						  <td>[[${u.enable}]]</td>
 						  
 						   <td class="p-4">
-							<a th:href="@{/admin/updateSts(status=true, id=${u.id})}" class="btn btn-sm btn-primary">
+							<a th:href="@{/admin/updateSts(status=true, id=${u.id}, type = ${userType})}" class="btn btn-sm btn-primary">
 							   Active </a>
 								
-							<a th:href="@{/admin/updateSts(status=false, id=${u.id})}"
+							<a th:href="@{/admin/updateSts(status=false, id=${u.id}, type = ${userType})}"
 							 class="btn btn-sm btn-danger">
 							  Inactive </a>
+							  
+							  <a th:if="${userType==1}" th:href="@{/admin/makeAdmin(id=${u.id})}"
+							     class="btn btn-success btn-sm">
+							     Make Admin
+							  </a>
 							 
 						 </td>
 					    </tr>

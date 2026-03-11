@@ -11,17 +11,29 @@
 					<div class="row">
 						
 						<div class="col-md-10 offset-md-1">
-							<div class="card">
+							<div class="card bg-light">
+								<th:block th:if="${user.role=='ROLE_ADMIN'}">
+									<a href="/admin/" class="text-decoration-none"><i class="fa-solid fa-backward"></i> Back </a>
+								</th:block>
+								
+								<th:block th:unless="${user.role=='ROLE_ADMIN'}">
+									<a href="/" class="text-decoration-none"><i class="fa-solid fa-backward"></i> Back </a>
+								</th:block>
+								
+								
 								<div class="card-body">
+									<div class="row">
+									<div class="col mt-5">
 									<p class="fs-3 text-center fw-bold"> My Profile </p>
-									<div class="text-center">
+									</div>
+									<div class="text-center col">
 										
 									<img alt="Profile_Image" th:src="${user.profileImage}" class="border p-2"
-									 style="width: 130px; height: 130px; border-radius: 50%;">
+									 style="width: 230px; height: 250px; border-radius: 50%;">
 									 
 									 </div>
-									 
-									 <div class="col-md-6 offset-md-3 mt-4">
+									 </div>
+									 <div class="col-md-8 offset-md-2 mt-4">
 										
 									 <table class="table table-borderless">
 									 
@@ -30,7 +42,7 @@
 											
 									       <th scope="row"> Name </th>
 										   <td>:</td>
-									       <td>[[${user.fullName}]]</td>
+									       <td class="fw-bold text-primary">[[${user.fullName}]]</td>
 										   
 									     </tr>
 										 
@@ -38,7 +50,7 @@
 
 										   <th scope="row"> Email </th>
 										   <td>:</td>
-										   <td>[[${user.email}]]</td>
+										   <td class="fw-bold text-primary">[[${user.email}]]</td>
 										   
 										 </tr>
 										 
@@ -46,7 +58,7 @@
 
 										   <th scope="row"> Mobile Number </th>
 										   <td>:</td>
-										   <td>[[${user.mobileNumber}]]</td>
+										   <td class="fw-bold text-primary">[[${user.mobileNumber}]]</td>
 										   
 										 </tr>
 										 
@@ -54,7 +66,7 @@
 
 										   <th scope="row"> Address </th>
 										   <td>:</td>
-										   <td>[[${user.address}]]</td>
+										   <td class="fw-bold text-primary">[[${user.address}]]</td>
 										   
 										 </tr>
 										 
@@ -62,7 +74,7 @@
 
 										   <th scope="row"> State </th>
 										   <td>:</td>
-										   <td>[[${user.state}]]</td>
+										   <td class="fw-bold text-primary">[[${user.state}]]</td>
 										   
 										 </tr>
 										 
@@ -70,7 +82,7 @@
 
 										   <th scope="row"> City </th>
 										   <td>:</td>
-										   <td>[[${user.city} +${" , "}+ ${user.pincode}]] </td>
+										   <td class="fw-bold text-primary">[[${user.city} +${" , "}+ ${user.pincode}]] </td>
 										   
 										 </tr>
 										 
@@ -78,14 +90,14 @@
 
 										   <th scope="row"> Role </th>
 										   <td>:</td>
-										   <td>[[${user.role}]] </td>
+										   <td class="fw-bold text-primary">[[${user.role}]] </td>
 										   
 										 </tr>
 										 
 										 <tr>
 
 										   <th scope="row"></th>
-										   <td> <a href="/user/edit-profile" class="btn btn-primary"> Edit Profile </a></td>
+										   <td> <a href="/user/edit-profile" class="btn btn-success"> Edit Profile </a></td>
 										   <td></td>
 										   
 										 </tr>

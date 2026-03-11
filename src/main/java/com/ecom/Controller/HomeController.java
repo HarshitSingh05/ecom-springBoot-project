@@ -3,10 +3,12 @@ package com.ecom.Controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ import com.ecom.service.ProductService;
 import com.ecom.service.UserService;
 import com.ecom.util.CommonUtil;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -71,8 +74,18 @@ public class HomeController {
 	
 	
 	@GetMapping({"/","/home"})
-	public String home() {
+	public String home(Model m) {
 		
+		List<Category> list = categoryService.getAllActiveCategory().stream()
+				.sorted(Comparator.comparing(Category::getId).reversed())
+				.limit(6).toList();
+		
+		List<Product> allActiveProduct = productService.getAllActiveProduct("").stream()
+				.sorted(Comparator.comparing(Product::getId).reversed())
+				.limit(8).toList();
+		
+		m.addAttribute("category", list);
+		m.addAttribute("activeProduct", allActiveProduct);
 		return "home";
 	}
 	
@@ -87,14 +100,33 @@ public class HomeController {
 	}
 	
 	@GetMapping("/products")
-	public String products(Model m, @RequestParam(value = "category" , defaultValue = "") String category){
+	public String products(Model m, @RequestParam(value = "category" , defaultValue = "") String category,
+			@RequestParam(name="pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(name="pageSize", defaultValue = "9") Integer pageSize, @RequestParam(defaultValue = "") String ch){
 		List<Category> categories = categoryService.getAllActiveCategory();
-		List<Product> products = productService.getAllActiveProduct(category);
-		m.addAttribute("categories", categories);
-		m.addAttribute("products", products);
 		m.addAttribute("paramValue", category);
+		m.addAttribute("categories", categories);
+		
+//		List<Product> products = productService.getAllActiveProduct(category);
+//		m.addAttribute("products", products);
+		Page<Product> page = null;
+		if(StringUtils.isEmpty(ch)) {
+			page = productService.getAllActiveProductPagination(pageNo, pageSize, category);
+		}else {
+			page = productService.searchActiveProductPagination(pageNo, pageSize, category, ch);
+		}
+		
+		
+		m.addAttribute("products", page.getContent());
+		m.addAttribute("pageNo", page.getNumber());
+		m.addAttribute("pageSize", pageSize);
+		m.addAttribute("totalElements", page.getTotalElements());
+		m.addAttribute("totalPages", page.getTotalPages());
+		m.addAttribute("isFirst", page.isFirst());
+		m.addAttribute("isLast", page.isLast());
+		
 		return "product";
-	}
+	} 
 
 	@GetMapping("/product/{id}")
 	public String product(@PathVariable int id, Model m) {
@@ -106,18 +138,27 @@ public class HomeController {
 	@PostMapping("/saveUser")
 	public String saveUser(@ModelAttribute UserDetls user, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
 		
-		String imageUrl = "default.jpg";
-	    if (file != null && !file.isEmpty()) {
-	        imageUrl = imageService.uploadImage(file, "ecom/users");
-	    }
-		user.setProfileImage(imageUrl);
 		
-		UserDetls saveUser = userService.saveUser(user);
-		
-		if(!ObjectUtils.isEmpty(saveUser)) {
-			session.setAttribute("succMsg", "User Registerd Successfully");
-		}else {
-			session.setAttribute("errorMsg", "Something went Wrong. TryAgain!!");	
+		boolean existsEmail = userService.existsEmail(user.getEmail());
+		if(existsEmail) {
+			session.setAttribute("errorMsg", "Email id Already exists");
+		}
+		else {
+			
+			String imageUrl = "default.jpg";
+		    if (file != null && !file.isEmpty()) {
+		        imageUrl = imageService.uploadImage(file, "ecom/users");
+		    }
+			user.setProfileImage(imageUrl);
+			
+			UserDetls saveUser = userService.saveUser(user);
+			
+			if(!ObjectUtils.isEmpty(saveUser)) {
+				session.setAttribute("succMsg", "User Registerd Successfully");
+			}else {
+				session.setAttribute("errorMsg", "Something went Wrong. TryAgain!!");	
+				
+			}
 			
 		}
 		

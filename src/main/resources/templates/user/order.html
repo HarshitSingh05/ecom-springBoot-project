@@ -14,48 +14,49 @@
 					   
 							<div class="mb-3 row">
 								<p class="text-center fs-4 fw-bold text-success"> Delivery Address </p>
+								<p class="text-center fw-bold text-danger"> You can edit your delivery details </p>
 								<hr>
 								<div class="col p-1">
-									<label class="mx-2">First Name</label>
-								<input type="text" name="firstName" class="form-control">
+									<label class="mx-2 fw-bold">First Name</label>
+								<input type="text" name="firstName" class="form-control" th:value="${userDetails.fullName}" required>
 								</div>
 								
 								<div class="col p-1">
-									<label class="mx-2">Last Name</label>
-								<input type="text" name="lastName" class="form-control">
+									<label class="mx-2 fw-bold">Last Name</label>
+								<input type="text" name="lastName" class="form-control" required>
 								</div>
 							</div>
 							
 							<div class="mb-3 row">
 								<div class="col p-1">
-									<label class="mx-2">Email</label>
-								<input type="email" name="email"  class="form-control">
+									<label class="mx-2 fw-bold">Email</label>
+								<input type="email" name="email"  class="form-control" th:value="${userDetails.email}" required>
 								</div>
 								<div class="col p-1">
-									<label class="mx-2">Mobile Number</label>
-								<input type="text" name="mobileNo" class="form-control">
-								</div>
-							</div>
-							
-							<div class="mb-3 row">
-								<div class="col p-1">
-									<label class="mx-2">Address</label>
-								<input type="text" name="address" class="form-control">
-								</div>
-								<div class="col p-1">
-									<label class="mx-2">City</label>
-								<input type="text" name="city" class="form-control">
+									<label class="mx-2 fw-bold">Mobile Number</label>
+								<input type="text" name="mobileNo" class="form-control" th:value="${userDetails.mobileNumber}" required>
 								</div>
 							</div>
 							
 							<div class="mb-3 row">
 								<div class="col p-1">
-									<label class="mx-2">State</label>
-								<input type="text" name="state" class="form-control">
+									<label class="mx-2 fw-bold">Address</label>
+								<input type="text" name="address" class="form-control" th:value="${userDetails.address}" required>
 								</div>
 								<div class="col p-1">
-									<label class="mx-2">Pincode</label>
-								<input type="number" name="pincode" class="form-control">
+									<label class="mx-2 fw-bold">City</label>
+								<input type="text" name="city" class="form-control" th:value="${userDetails.city}" required>
+								</div>
+							</div>
+							
+							<div class="mb-3 row">
+								<div class="col p-1">
+									<label class="mx-2 fw-bold">State</label>
+								<input type="text" name="state" class="form-control" th:value="${userDetails.state}" required>
+								</div>
+								<div class="col p-1">
+									<label class="mx-2 fw-bold">Pincode</label>
+								<input type="number" name="pincode" class="form-control" th:value="${userDetails.pincode}" required>
 								</div>
 							</div>
 							
@@ -69,24 +70,24 @@
 									<table class="table table-borderless">
 										<tbody>
 											<tr>
-												<td>Total price</td>
+												<td class="fw-bold">Total price</td>
 												<td>:</td>
 												<td>&#8377; [[${orderPrice}]]</td>
 											</tr>
 											<tr>
-												<td>Delivery Fee</td>
+												<td class="fw-bold">Delivery Fee</td>
 												<td>:</td>
 												<td>&#8377; 250</td>
 											</tr>
 
 											<tr>
-												<td>Tax</td>
+												<td class="fw-bold">Tax</td>
 												<td>:</td>
 												<td>&#8377; 100</td>
 											</tr>
 
 											<tr class="border-top">
-												<td>Payment Price</td>
+												<td class="fw-bold">Payment Price</td>
 												<td>:</td>
 												<td>&#8377; [[${totalOrderPrice}]]</td>
 											</tr>
@@ -101,8 +102,8 @@
 
 										<div class="mb-3">
 											<label class="form-label">Select payment Type</label>
-											 <select class="form-control" name="paymentType">
-												<option>--select--</option>
+											 <select class="form-control" name="paymentType" required>
+												<option value="" disabled selected>--select--</option>
 												<option value="COD">Cash on Delivery</option>
 												<option value="ONLINE"> Online Payment</option>
 											 </select>

@@ -46,60 +46,19 @@
 		<div class="container">
 			<div class="row">
 				<p class="text-center fw-semibold fs-3"> Category </p>
-				<div class="col-md-2">
-						  <div class="card shadow-sm border-1 rounded-3">
+				<div class="col-md-2" th:each="c:${category}">
+					
+					<a th:href="@{/products(category=${c.name})}" class="text-decoration-none">
+						  <div class="card shadow-sm border-1 rounded-3 category-card">
 						    <div class="card-body text-center">
-								<img src="img/category_img/appli.jpg"  class="card-img-top" width="100%" height="200px">
-						      <p class="card-text fw-semibold mb-0"> Electronics </p>
+								<img th:src="${c.imageName}"  class="card-img-top" width="100%" height="200px">
+						    <p class="card-text fw-semibold mb-0 text-dark"> [[${c.name}]] </p>
 						    </div>
 						  </div>
+						  </a>
+						  
 					</div>
 					
-					
-					<div class="col-md-2">
-						<div class="card shadow-sm border-1 rounded-3">
-							<div class="card-body text-center">
-								<img src="img/category_img/beuty.png"  class="card-img-top" width="100%" height="200px">
-								<p class="card-text fw-semibold mb-0"> Beauty Products </p>
-							</div>
-					    </div>
-					</div>
-					<div class="col-md-2">
-						<div class="card shadow-sm border-1 rounded-3">
-							<div class="card-body text-center">
-								<img src="img/category_img/groccery.jpg"  class="card-img-top" width="100%" height="200px">
-								<p class="card-text fw-semibold mb-0"> Groceries </p>
-							</div>
-					    </div>
-					</div>
-					
-					<div class="col-md-2">
-						<div class="card shadow-sm border-1 rounded-3">
-							<div class="card-body text-center">
-								<img src="img/category_img/laptop.jpg"  class="card-img-top" width="100%" height="200px">
-								<p class="card-text fw-semibold mb-0"> Laptop </p>
-							</div>
-					    </div>
-					</div>
-					
-					<div class="col-md-2">
-						<div class="card shadow-sm border-1 rounded-3">
-							<div class="card-body text-center">
-								<img src="img/category_img/mobile.jpg"  class="card-img-top" width="100%" height="200px">
-								<p class="card-text fw-semibold mb-0"> Mobile </p>
-							</div>
-					    </div>
-					</div>
-					
-					
-					<div class="col-md-2">
-						<div class="card shadow-sm border-1 rounded-3">
-							<div class="card-body text-center">
-								<img src="img/category_img/pant.png"  class="card-img-top" width="100%" height="200px">
-								<p class="card-text fw-semibold mb-0"> Clothes </p>
-							</div>
-					    </div>
-					</div>	
 							
 				</div>
 				
@@ -116,42 +75,19 @@
 				<div class="row">
 					<p class="text-center fw-semibold fs-4">Latest Product</p>
 					
-						<div class="col-md-3">
-							<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+						<div class="col-md-3" th:each="p:${activeProduct}">
+							<a th:href="@{/product/{id}(id=${p.id})}" class="text-decoration-none">
+							<div class="card shadow-sm p-1 mb-5 bg-body-tertiary rounded product-card">
 								<div class="card-body text-center">
-									<img alt="" src="img/product_img/laptop.jpg" class="" width="55%" height="150px">
-									<p class="text-center fw-semibold"> HP Laptop </p>
+									<img alt="" th:src="${p.image}" class="img-fluid product-img">
+									<p class="text-center fw-semibold text-dark"> [[${p.title}]] </p>
+									
 								</div>
 							</div>
+							</a>
 						</div>
-						
-						
-						<div class="col-md-3">
-							<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-								<div class="card-body text-center">
-									<img alt="" src="img/product_img/laptop.jpg" class="" width="55%" height="150px">
-									<p class="text-center fw-semibold"> HP Laptop </p>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-md-3">
-							<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-								<div class="card-body text-center">
-									<img alt="" src="img/product_img/laptop.jpg" class="" width="55%" height="150px">
-									<p class="text-center fw-semibold"> HP Laptop </p>
-								</div>
-							</div>
-						</div>
-						
-						<div class="col-md-3">
-							<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-								<div class="card-body text-center">
-									<img alt="" src="img/product_img/laptop.jpg" class="" width="55%" height="150px">
-									<p class="text-center fw-semibold"> HP Laptop </p>
-								</div>
-							</div>
-						</div>
+				</div>
+		</div>
 		
 		
 	</section>
