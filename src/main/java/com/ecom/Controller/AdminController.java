@@ -202,7 +202,7 @@ public class AdminController {
 		
 		
 		m.addAttribute("products", products);
-		return "/admin/products";
+		return "admin/products";
 	}
 	
 	@GetMapping("/deleteProduct/{id}")
@@ -221,7 +221,7 @@ public class AdminController {
 	public String editProduct(@PathVariable int id, Model m){
 		m.addAttribute("product", productService.getProductById(id));
 		m.addAttribute("categories", categoryService.getAllCategory());
-		return "/admin/edit_product";
+		return "admin/edit_product";
 	}
 	
 	@PostMapping("/updateProduct")
@@ -251,7 +251,7 @@ public class AdminController {
 		}
 		m.addAttribute("userType", type);
 		m.addAttribute("users", users);
-		return "/admin/users";
+		return "admin/users";
 	}
 	
 	@GetMapping("/updateSts")
@@ -271,7 +271,7 @@ public class AdminController {
 		
 		List<ProductOrder> allOrders = orderService.getAllOrders();
 	    m.addAttribute("allOrders", allOrders);
-		return "/admin/allOrders";
+		return "admin/allOrders";
 	}
 	
 	@PostMapping("/update-order-status")
@@ -303,7 +303,7 @@ public class AdminController {
 	
 	@GetMapping("/add-admin")
 	public String loadAdminAdd() {
-		return "/admin/add_admin";
+		return "admin/add_admin";
 	}
 	
 	
